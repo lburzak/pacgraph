@@ -20,7 +20,7 @@ def show_packages_graph(packages: list[Package], max_packages: Optional[int] = N
     package_name_to_node_id = {}
 
     # TODO: Remove frame and make it 100vw/100vh
-    net = Network(width='98vw', height='98vh')
+    net = Network(width='98vw', height='98vh', directed=True)
 
     for index, package in enumerate(packages):
         package_name_to_node_id[package.name] = index
