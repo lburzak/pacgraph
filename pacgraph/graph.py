@@ -23,7 +23,19 @@ def show_packages_graph(packages: list[Package]):
     min_size = min(package_sizes)
     max_size = max(package_sizes)
 
+    package_name_to_node_id = {}
+
     for index, package in enumerate(packages):
-        net.add_node(index, label=package.name, size=normalize_node_size(package.size, min_size, max_size))
+        package_name_to_node_id[package.name] = index
+        node_size = normalize_node_size(package.size, min_size, max_size)
+        net.add_node(index, label=package.name, size=node_size)
+
+    for package in packages:
+        package_node_id = package_name_to_node_id[package.name]
+
+        for dependency in package.dependencies:
+            if dependency in package_name_to_node_id:
+                dependency_node_id = package_name_to_node_id[dependency]
+                net.add_edge(package_node_id, dependency_node_id)
 
     net.show('nodes.html')
