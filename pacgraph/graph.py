@@ -28,7 +28,8 @@ def show_packages_graph(packages: list[Package]):
     for index, package in enumerate(packages):
         package_name_to_node_id[package.name] = index
         node_size = normalize_node_size(package.size, min_size, max_size)
-        net.add_node(index, label=package.name, size=node_size)
+        net.add_node(index, label=package.name, size=node_size,
+                     color="red" if package.is_explicitly_installed else None)
 
     for package in packages:
         package_node_id = package_name_to_node_id[package.name]
